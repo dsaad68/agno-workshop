@@ -2,8 +2,8 @@ from agno.agent import Agent
 from agno.models.openai import OpenAIChat
 from agno.tools.yfinance import YFinanceTools
 
-tool_agent = Agent(
-    name="Simple Tool",
+reason_llm_agent = Agent(
+    name="Reasoning Agent",
     model=OpenAIChat(id="o3-mini"),
     tools=[YFinanceTools(stock_price=True,
                         analyst_recommendations=True,
@@ -15,7 +15,7 @@ tool_agent = Agent(
 )
 
 if __name__ == "__main__":
-    tool_agent.print_response("Write a report comparing NVDA to TSLA",
+    reason_llm_agent.print_response("Write a report comparing NVDA to TSLA",
                             stream=True,
                             show_full_reasoning=True,
                             stream_intermediate_steps=True,
