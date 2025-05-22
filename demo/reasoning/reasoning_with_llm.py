@@ -4,7 +4,7 @@ from agno.tools.yfinance import YFinanceTools
 
 tool_agent = Agent(
     name="Simple Tool",
-    model=OpenAIChat(id="gpt-4.1"),
+    model=OpenAIChat(id="o3-mini"),
     tools=[YFinanceTools(stock_price=True,
                         analyst_recommendations=True,
                         company_info=True,
@@ -15,4 +15,9 @@ tool_agent = Agent(
 )
 
 if __name__ == "__main__":
-    tool_agent.print_response("Write a report comparing NVDA to TSLA", stream=True)
+    tool_agent.print_response("Write a report comparing NVDA to TSLA",
+                            stream=True,
+                            show_full_reasoning=True,
+                            stream_intermediate_steps=True,
+                            show_reasoning=True,
+                            )
