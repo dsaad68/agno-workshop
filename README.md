@@ -1,6 +1,6 @@
 # agno-workshop
 
-A practical workshop and demo suite for building advanced AI agents with [Agno](https://docs.agno.com) — a lightweight, model-agnostic framework for reasoning agents, multimodal agents, and agentic workflows.
+This the sample codes and demo suite for `Introduction to LLM Workshop` with [Agno](https://docs.agno.com) — a lightweight, model-agnostic framework for reasoning agents, multimodal agents, and agentic workflows.
 
 ## 📦 Installation & Environment Setup
 
@@ -14,6 +14,10 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 on windows:
 ```shell
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+or with pip:
+```bash
+pip install uv
 ```
 
 #### 1. Clone this repo
@@ -53,8 +57,8 @@ uv run demo/with_tool/tool.py
 ```
 
 ### 3. Raindrop Agent
-Agent with a custom toolkit for querying Raindrop bookmarks by date and tag.
-Requires `RAINDROP_ACCESS_TOKEN`.
+Agent with a custom toolkit for querying Raindrop bookmarks by date and tag. More about [Raindrop.io](https://raindrop.io/).
+Requires `RAINDROP_ACCESS_TOKEN`. Visit [Raindrop.io](https://raindrop.io/settings/applications) to get your token.
 ```bash
 uv run demo/with_tool/raindrop_agent/agent.py
 ```
@@ -75,7 +79,25 @@ docker run -p 6333:6333 -p 6334:6334 \
 uv run demo/knowledge/qdrant-demo.py
 ```
 
-### 5. Agent Team
+### 5. Agent with Reasoning Tool
+Agent that uses a reasoning tool to answer questions.
+```bash
+uv run demo/reasoning/reasoning_tool.py
+```
+
+### 6. Agent with Reasoning LLM
+Agent that uses a reasoning LLM to answer questions.
+```bash
+uv run demo/reasoning/reasoning_llm.py
+```
+
+### 7. Agent with Memory
+Agent that uses a memory to answer questions.
+```bash
+uv run demo/memory/simple.py
+```
+
+### 8. Agent Team
 Agent Team that contains two agents:
 - Web Agent: Search the web for information
 - Finance Agent: Get financial data
@@ -116,15 +138,3 @@ npm run dev
 - Open [http://localhost:3000](http://localhost:3000) to chat with your agents.
 - By default, connects to `http://localhost:7777` (configurable in the UI).
 - See [agent-ui/README.md](agent-ui/README.md) for more.
-
----
-
-## 📚 Documentation & Community
-
-- [Agno Docs](https://docs.agno.com)
-- [Getting Started Cookbook](https://docs.agno.com/cookbook)
-- [Community Forum](https://community.agno.com)
-- [Discord Chat](https://discord.gg/agno)
-
-
-
