@@ -23,7 +23,7 @@ pip install uv
 #### 1. Clone this repo
 
 ```bash
-git clone https://github.com/your-org/agno-workshop.git
+git clone https://github.com/dsaad68/agno-workshop.git
 cd agno-workshop
 ```
 
