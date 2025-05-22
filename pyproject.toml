@@ -1,0 +1,44 @@
+[project]
+name = "agno-workshop"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "agno==1.5.1",
+    "duckduckgo-search>=8.0.2",
+    "fastapi[standard]>=0.115.12",
+    "openai>=1.81.0",
+    "pypdf>=5.5.0",
+    "qdrant-client>=1.14.2",
+    "sqlalchemy>=2.0.41",
+    "yfinance>=0.2.61",
+]
+
+[tool.ruff]
+target-version = "py312"
+exclude = [".venv", "sandbox"]
+line-length = 180
+
+[tool.ruff.lint]
+preview = true
+select = ["ALL"]
+ignore = ["D100", "ANN001", "TD003", "SLF001", "CPY001", "D104", "FIX002", "BLE001", "TRY301"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"lambda/ocr-agent/lambda_function.py" = ["INP001"]
+"lambda/schemaful-agent/lambda_function.py" = ["INP001"]
+"demo/test_script.py" = ["INP001"]
+
+[tool.ruff.format]
+preview = true
+
+[tool.pyright]
+typeCheckingMode = "basic"
+include = ["src/"]
+venv = ".venv"
+pythonVersion = "3.12"
+deprecateTypingAliases = true
