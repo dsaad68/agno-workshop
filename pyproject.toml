@@ -49,7 +49,7 @@ preview = true
 
 [tool.pyright]
 typeCheckingMode = "basic"
-include = ["src/"]
+include = ["demo/"]
 venv = ".venv"
 pythonVersion = "3.12"
 deprecateTypingAliases = true
