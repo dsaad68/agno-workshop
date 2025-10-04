@@ -1,35 +1,35 @@
-# TODO: Fix this demo
-
-import asyncio
-
 from agno.agent import Agent
-from agno.knowledge.pdf_url import PDFUrlKnowledgeBase
+from agno.db.postgres import PostgresDb
+from agno.knowledge.knowledge import Knowledge
 from agno.vectordb.qdrant import Qdrant
 
 COLLECTION_NAME = "thai-recipes"
 
-# Initialize Qdrant with local instance
-vector_db = Qdrant(
-    collection=COLLECTION_NAME,
-    url="http://localhost:6333",
+vector_db = Qdrant(collection=COLLECTION_NAME, url="http://localhost:6333")
+
+contents_db = PostgresDb(
+    db_url="postgresql+psycopg://ai:ai@localhost:5532/ai",
+    knowledge_table="knowledge_contents",
 )
 
-# Create knowledge base
-knowledge_base = PDFUrlKnowledgeBase(
-    urls=["https://agno-public.s3.amazonaws.com/recipes/ThaiRecipes.pdf"],
+knowledge = Knowledge(
+    name="My Qdrant Vector Knowledge Base",
+    description="This is a knowledge base that uses a Qdrant Vector DB",
     vector_db=vector_db,
+    contents_db=contents_db,
 )
 
-knowledge_agent = Agent(
-    name="Knowledge Agent",
-    role="Search the knowledge base for information",
-    knowledge=knowledge_base,
-    markdown=True,
+knowledge.add_content(
+    name="Recipes",
+    url="https://agno-public.s3.amazonaws.com/recipes/ThaiRecipes.pdf",
+    metadata={"doc_type": "recipe_book"},
 )
 
-if __name__ == "__main__":
-    # Load knowledge base asynchronously
-    asyncio.run(knowledge_base.aload(recreate=True))  # Comment out after first run
 
-    # Create and use the agent asynchronously
-    asyncio.run(knowledge_agent.aprint_response("What are the 3 categories of Thai SELECT is given to restaurants overseas?", markdown=True))
+agent = Agent(knowledge=knowledge)
+agent.print_response("List down the ingredients to make Massaman Gai", markdown=True)
+
+
+vector_db.delete_by_name("Recipes")
+
+vector_db.delete_by_metadata({"doc_type": "recipe_book"})

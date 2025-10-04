@@ -10,6 +10,7 @@ db_file = "tmp/agno.db"
 
 # Initialize storage
 db = SqliteDb(db_file=db_file)
+db.clear_memories()
 
 # Initialize Agent
 memory_agent = Agent(

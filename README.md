@@ -1,6 +1,8 @@
 # agno-workshop
 
-This the sample codes and demo suite for `Introduction to LLM Workshop` with [Agno](https://docs.agno.com) — a lightweight, model-agnostic framework for reasoning agents, multimodal agents, and agentic workflows.
+> 🆕 **Update:** This repository now reflects the latest features and improvements introduced in `Agno V2.0`.
+
+This the sample codes and demo suite for `Introduction to LLM Workshop 2.0` with [Agno](https://docs.agno.com) — a lightweight, model-agnostic framework for reasoning agents, multimodal agents, and agentic workflows.
 
 ## 📦 Installation & Environment Setup
 
@@ -47,24 +49,26 @@ This repo includes several demo agents to showcase Agno's capabilities:
 ### 1. Barebone Agent
 A minimal agent using OpenAI GPT-4.1. Answers general questions.
 ```bash
-uv run demo/simple/agent.py
+uv run src/agno_workshop/simple/agent.py
 ```
 
 ### 2. Simple Tool Agent
 Agent with YFinance tools for financial data, company info, and news.
 ```bash
-uv run demo/with_tool/tool.py
+uv run src/agno_workshop/with_tool/internal_tool.py
 ```
 
 ### 3. Raindrop Agent
 Agent with a custom toolkit for querying Raindrop bookmarks by date and tag. More about [Raindrop.io](https://raindrop.io/).
 Requires `RAINDROP_ACCESS_TOKEN`. Visit [Raindrop.io](https://raindrop.io/settings/applications) to get your token.
 ```bash
-uv run demo/with_tool/raindrop_agent/agent.py
+uv run src/agno_workshop/with_tool/raindrop_agent/agent.py
 ```
 
 ### 4. Knowledge Agent
 Agent that create a simple RAG over PDFs.
+
+#### Qdrant Database
 Requires `Qdrant` Vector Database.
 
 1. Setup the Vector Database:
@@ -76,25 +80,39 @@ docker run -p 6333:6333 -p 6334:6334 \
 
 2. Run the agent:
 ```bash
-uv run demo/knowledge/qdrant-demo.py
+uv run src/agno_workshop/knowledge/qdrant_demo.py
+```
+
+#### SurrealDB Database
+Requires `SurrealDB` Vector Database.
+
+1. Setup the Vector Database:
+```bash
+docker run --rm --pull always -p 8000:8000 \
+  surrealdb/surrealdb:latest start \
+  --user root --pass root
+```
+2. Run the agent:
+```bash
+uv run src/agno_workshop/knowledge/surrealdb_demo.py
 ```
 
 ### 5. Agent with Reasoning Tool
 Agent that uses a reasoning tool to answer questions.
 ```bash
-uv run demo/reasoning/reasoning_tool.py
+uv run src/agno_workshop/reasoning/reasoning_tool.py
 ```
 
 ### 6. Agent with Reasoning LLM
 Agent that uses a reasoning LLM to answer questions.
 ```bash
-uv run demo/reasoning/reasoning_llm.py
+uv run src/agno_workshop/reasoning/reasoning_with_llm.py
 ```
 
 ### 7. Agent with Memory
 Agent that uses a memory to answer questions.
 ```bash
-uv run demo/memory/simple.py
+uv run src/agno_workshop/memory/simple.py
 ```
 
 ### 8. Agent Team
@@ -105,17 +123,17 @@ Agent Team that contains two agents:
 They are working together to do a research on a given topic.
 
 ```bash
-uv run demo/team/coordinate.py
+uv run src/agno_workshop/team/coordinate.py
 ```
 
 ---
 
-## 🖥️ Agent Playground (FastAPI App)
+## 🖥️ Agno AgentOS (FastAPI App)
 
 You can launch a playground UI to interact with all agents:
 
 ```bash
-uv run main.py
+uv run src/agno_workshop/agentos/app.py
 ```
 
 This starts a FastAPI app with a chat interface for all demo agents.
