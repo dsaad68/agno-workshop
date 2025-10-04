@@ -5,12 +5,8 @@ from agno.tools.yfinance import YFinanceTools
 tool_agent = Agent(
     name="Simple Tool",
     model=OpenAIChat(id="gpt-4.1"),
-    tools=[YFinanceTools(stock_price=True,
-                        analyst_recommendations=True,
-                        company_info=True,
-                        company_news=True)],
+    tools=[YFinanceTools()],
     instructions="Use tables to display data.",
-    show_tool_calls=True,
     markdown=True,
 )
 

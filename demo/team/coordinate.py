@@ -1,3 +1,5 @@
+from textwrap import dedent
+
 from agno.agent import Agent
 from agno.models.openai import OpenAIChat
 from agno.team import Team
@@ -10,7 +12,6 @@ web_agent = Agent(
     model=OpenAIChat(id="gpt-4o"),
     tools=[DuckDuckGoTools()],
     instructions="Always include sources",
-    show_tool_calls=True,
     markdown=True,
 )
 
@@ -18,20 +19,24 @@ finance_agent = Agent(
     name="Finance Agent",
     role="Get financial data",
     model=OpenAIChat(id="gpt-4o"),
-    tools=[YFinanceTools(stock_price=True, analyst_recommendations=True, company_info=True)],
+    tools=[YFinanceTools()],
     instructions="Use tables to display data",
-    show_tool_calls=True,
     markdown=True,
 )
 
 agent_team = Team(
     name="Financial Agent Team",
-    mode="coordinate",
+    # Mode is here is coordinate mode
+    determine_input_for_members=True,
     members=[web_agent, finance_agent],
     model=OpenAIChat(id="gpt-4o"),
-    success_criteria="A comprehensive financial news report with clear sections and data-driven insights.",
-    instructions=["Always include sources", "Use tables to display data"],
-    show_tool_calls=True,
+    instructions=dedent("""
+                    You are the coordinator of a team of expert agents collaborating to produce a comprehensive, data-driven financial news report.
+                    Guide the discussion, encourage collaboration, and ensure all relevant perspectives are considered.
+                    The final report should be well-structured, with clear sections, actionable insights, and data presented in tables where appropriate.
+                    Always cite credible sources for all information and data.
+                    Instruct team members to leverage their unique expertise and share relevant findings to enhance the overall quality and coherence of the report.
+                    """),
     markdown=True,
 )
 

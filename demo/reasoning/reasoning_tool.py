@@ -17,7 +17,6 @@ reasoning_agent = Agent(
     ],
     instructions="Use tables where possible",
     markdown=True,
-    show_tool_calls=True,
 )
 
 if __name__ == "__main__":
