@@ -175,3 +175,5 @@ cython_debug/
 
 agent-ui/
 tmp/
+qdrant_storage/
+surrealdb_storage/

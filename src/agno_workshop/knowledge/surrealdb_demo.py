@@ -1,3 +1,5 @@
+import asyncio
+
 from agno.agent import Agent
 from agno.knowledge.embedder.openai import OpenAIEmbedder
 from agno.knowledge.knowledge import Knowledge
@@ -25,24 +27,21 @@ surrealdb = SurrealDb(
     embedder=OpenAIEmbedder(),
 )
 
+knowledge = Knowledge(vector_db=surrealdb)
 
-def sync_demo() -> None:
-    """Demonstrate synchronous usage of SurrealDb."""
-    knowledge = Knowledge(
-        vector_db=surrealdb,
-    )
-
-    # Load data synchronously
-    knowledge.add_content(
-        url="https://agno-public.s3.amazonaws.com/recipes/ThaiRecipes.pdf",
-    )
-
-    agent = Agent(knowledge=knowledge)
-    agent.print_response(
-        "What are the 3 categories of Thai SELECT is given to restaurants overseas?",
-        markdown=True,
-    )
+agent = Agent(
+    knowledge=knowledge,
+    search_knowledge=True,
+)
 
 
 if __name__ == "__main__":
-    sync_demo()
+    # Asynchronously add the content of the PDF file to the knowledge.
+    asyncio.run(
+        knowledge.add_content_async(
+            path="data/pdf",
+        ),
+    )
+
+    # Create and use the agent
+    asyncio.run(agent.aprint_response("How to make Thai curry?", markdown=True))
